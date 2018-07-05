@@ -7,20 +7,29 @@ Chance of landing crash = 8% * (cargo carried / cargo limit)*/
 import java.util.Random;
 
 public class U2 extends Rocket {
+    //Constructor:
+    U2() {
+        this.rocketCost = 120;
+        this.rocketWeight = 18000;
+        this.rocketMaxWeight = 29000;
+        this.currentWeightOfRocket = this.rocketWeight;
+        this.cargoLimit = this.rocketMaxWeight - this.rocketWeight;
 
+    }
+
+    //Methods:
     @Override
     public boolean launch() {
-        if(new Random().nextInt(25)==0){ //bound value gonna changes depends on weight of cargo
-            return false;
-        }
-        else return true;
+        double randomNumber = Math.random();
+        this.chanceOfLaunchExplosion = 0.04 * ((double)this.cargoCarried / (double)this.cargoLimit);
+        return !(this.chanceOfLaunchExplosion >= randomNumber);
     }
+
 
     @Override
     public boolean land() {
-        if(new Random().nextInt(12)==0){ //bound value gonna changes depends on weight of cargo
-            return false;
-        }
-        else return true;
+        double randomNumber = Math.random();
+        this.chanceOfLandingCrash = 0.08 * ((double)this.cargoCarried / (double)this.cargoLimit);
+        return !(this.chanceOfLandingCrash >= randomNumber);
     }
 }

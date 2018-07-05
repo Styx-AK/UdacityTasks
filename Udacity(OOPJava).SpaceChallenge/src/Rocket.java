@@ -1,27 +1,29 @@
+import java.util.Random;
+
 public class Rocket implements SpaceShip {
-    private int cost;
-    private int weight;
-    private int maxWeight;
+    //Fields:
+    int rocketCost;
+    int rocketWeight;
+    int rocketMaxWeight;
+    int currentWeightOfRocket;
+    int cargoCarried;
+    int cargoLimit;
+    double chanceOfLaunchExplosion;
+    double chanceOfLandingCrash;
 
-    Rocket(int cost, int weight, int maxWeight) {
-        this.cost = cost;
-        this.weight = weight;
-        this.maxWeight = maxWeight;
-    }
-
+    // Methods:
     public boolean launch() {
         return true;
     }
     public boolean land() {
         return true;
     }
-    public boolean canCarry(Item item) {
-        if (item.weight <= Rocket.weight) {
-            return true;
-        }
-        else return false;
+
+    public boolean canCarry(Item specifiedItem) {
+        return (this.currentWeightOfRocket + specifiedItem.getWeight() <= rocketMaxWeight);
     }
-    public void carry(Item item) {
-        rocket.carry += item.weight;
+    public void carry(Item specifiedItem) {
+        this.currentWeightOfRocket += specifiedItem.getWeight();
+        this.cargoCarried = this.currentWeightOfRocket - this.rocketWeight;
     }
 }

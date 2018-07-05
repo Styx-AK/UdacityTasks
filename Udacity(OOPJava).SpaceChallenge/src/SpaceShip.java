@@ -1,6 +1,8 @@
 public interface SpaceShip {
+
+    //Methods:
     boolean launch();
     boolean land();
-    boolean canCarry(Item item);
-    void carry(Item item);
+    boolean canCarry(Item specifiedItem);
+    void carry(Item specifiedItem);
 }

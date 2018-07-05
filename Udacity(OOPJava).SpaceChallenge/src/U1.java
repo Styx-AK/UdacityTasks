@@ -4,25 +4,30 @@ Max weight (with cargo) = 18 Tonnes
 Chance of launch explosion = 5% * (cargo carried / cargo limit)
 Chance of landing crash = 1% * (cargo carried / cargo limit)*/
 
-import java.util.Random;
-
 public class U1 extends Rocket {
-    Rocket rocket = new Rocket(120, 18, 29);
+    //Constructor:
+    U1() {
+        this.rocketCost = 100;
+        this.rocketWeight = 10000;
+        this.rocketMaxWeight = 18000;
+        this.currentWeightOfRocket = this.rocketWeight;
+        this.cargoLimit = this.rocketMaxWeight - this.rocketWeight;
 
+    }
+
+    //Methods:
     @Override
     public boolean launch() {
-        if((new Random().nextInt(20)==0)*(cargo carried / cargo limit)){ //bound value gonna changes depends on weight of cargo
-            return false;
-        }
-        else return true;
+        double randomNumber = Math.random();
+        this.chanceOfLaunchExplosion = 0.05 * ((double)this.cargoCarried / (double)this.cargoLimit);
+        return !(this.chanceOfLaunchExplosion >= randomNumber);
     }
+
 
     @Override
     public boolean land() {
-        if(new Random().nextInt(100)==0){ //bound value gonna changes depends on weight of cargo
-            return false;
-        }
-        else return true;
+        double randomNumber = Math.random();
+        this.chanceOfLandingCrash = 0.01 * ((double)this.cargoCarried / (double)this.cargoLimit);
+        return !(this.chanceOfLandingCrash >= randomNumber);
     }
-
 }
