@@ -27,13 +27,30 @@ public class Simulation {
         return listOfItems;
     }
 
-// ------------------------
-    public ArrayList<U1> loadU1(ArrayList<Item>) {
-        //implementation of logic
-        ArrayList<U1> listRockets = new ArrayList<>();
-        return listRockets;
+
+    public ArrayList<U1> loadU1(int phase) {
+        String phaseOfTheMission = "Phase-1.txt";
+        if (phase == 2) {
+            phaseOfTheMission = "Phase-2.txt";
+        }
+        ArrayList<U1> listOfU1Rockets = new ArrayList<>();
+        ArrayList<Item> itemsToLoad = new ArrayList<>();
+        itemsToLoad = this.loadItem(phaseOfTheMission);
+        U1 newU1Rocket = new U1();
+        while (itemsToLoad.size() > 0) {
+            Item anItem = itemsToLoad.get(0);
+            if (newU1Rocket.canCarry(anItem)) {
+                newU1Rocket.carry(anItem);
+                itemsToLoad.remove(0);
+            } else {
+                listOfU1Rockets.add(newU1Rocket);
+                newU1Rocket = new U1();
+            }
+        }
+        return listOfU1Rockets;
     }
 
+    // ------------------------
     public ArrayList<U2> loadU2(ArrayList<Item>) {
         //implementation of logic
         ArrayList<U2> listRockets = new ArrayList<>();
