@@ -27,7 +27,6 @@ public class Simulation {
         return listOfItems;
     }
 
-
     public ArrayList<U1> loadU1(int phase) {
         String phaseOfTheMission = "Phase-1.txt";
         if (phase == 2) {
@@ -50,16 +49,48 @@ public class Simulation {
         return listOfU1Rockets;
     }
 
-    // ------------------------
-    public ArrayList<U2> loadU2(ArrayList<Item>) {
-        //implementation of logic
-        ArrayList<U2> listRockets = new ArrayList<>();
-        return listRockets;
+    public ArrayList<U2> loadU2(int phase) {
+        String phaseOfTheMission = "Phase-1.txt";
+        if (phase == 2) {
+            phaseOfTheMission = "Phase-2.txt";
+        }
+        ArrayList<U2> listOfU2Rockets = new ArrayList<>();
+        ArrayList<Item> itemsToLoad = new ArrayList<>();
+        itemsToLoad = this.loadItem(phaseOfTheMission);
+        U2 newU2Rocket = new U2();
+        while (itemsToLoad.size() > 0) {
+            Item anItem = itemsToLoad.get(0);
+            if(newU2Rocket.canCarry(anItem)) {
+                newU2Rocket.carry(anItem);
+                itemsToLoad.remove(0);
+            } else {
+                listOfU2Rockets.add(newU2Rocket);
+                newU2Rocket = new U2();
+            }
+        }
+        return listOfU2Rockets;
     }
 
-    public int RunSimulation(ArrayList) {
-        //implementation of logic
-        int overallCost=0;
-        return overallCost;
+    public int runSimulation(ArrayList<Rocket> listOfRockets) {
+        int totalBudget = 0;
+        for(int i = 0; i < listOfRockets.size(); i++) {
+            Rocket currentRocket = new Rocket();
+            currentRocket = listOfRockets.get(i);
+
+            boolean launchResult = currentRocket.launch();
+            while (!launchResult) {
+                totalBudget += currentRocket.rocketCost;
+                launchResult = currentRocket.launch();
+            }
+            totalBudget += currentRocket.rocketCost;
+
+            boolean landResult = currentRocket.land();
+            while (!landResult) {
+                totalBudget += currentRocket.rocketCost;
+                landResult = currentRocket.land();
+            }
+            totalBudget += currentRocket.rocketCost;
+        }
+        return totalBudget;
     }
 }
